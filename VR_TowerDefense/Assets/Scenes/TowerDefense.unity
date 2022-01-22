@@ -1134,6 +1134,7 @@ GameObject:
   - component: {fileID: 1282402522}
   - component: {fileID: 1282402523}
   - component: {fileID: 1282402524}
+  - component: {fileID: 1282402525}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -1317,12 +1318,29 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1282402518}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 080d95a628ec58446b433662cb792098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   teleportCircleUI: {fileID: 289041661}
+--- !u!114 &1282402525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282402518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 529813138b4252a40806a88df6bd5b35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teleportCircleUI: {fileID: 289041661}
+  lineSmooth: 40
+  curveLength: 50
+  gravity: -60
+  simulateTime: 0.02
 --- !u!1001 &1539516843
 PrefabInstance:
   m_ObjectHideFlags: 0
