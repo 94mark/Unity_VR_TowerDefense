@@ -36,8 +36,7 @@ public class Gun : MonoBehaviour
             //타워 레이어 얻어오기
             int towerLayer = 1 << LayerMask.NameToLayer("Tower");
             int layerMask = playerLayer | towerLayer;
-            //Ray를 쏜다. ray가 부딪힌 정보는 hitInfo에 담긴다
-
+            //Ray를 쏜다. ray가 부딪힌 모든 정보는 hitInfo에 담긴다
             if(Physics.Raycast(ray, out hitInfo, 200, ~layerMask))
             {
                 //총알 이펙트 진행되고 있으면 멈추고 재생
