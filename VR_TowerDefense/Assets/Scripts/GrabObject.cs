@@ -34,6 +34,24 @@ public class GrabObject : MonoBehaviour
             //2. 일정 영역 안에 폭탄이 있을 때
             //영역 안에 있는 모든 폭탄 검출
             Collider[] hitOjbects = Physics.OverlapSphere(ARAVRInput.RHandPosition, grabRange, grabbedLayer);
+            //가장 가까운 폭탄 인덱스
+            int closest = 0;
+            //손과 가장 가까운 물체 선택
+            for(int i = 1; i < hitOjbects.Length; i++)
+            {
+                //손과 가장 가까운 물체와의 거리
+                Vector3 closestPos = hitOjbects[closest].transform.position;
+                float closestDistance = Vector3.Distance(closestPos, ARAVRInput.RHandPosition);
+                //다음 물체와 손의 거리
+                Vector3 nextPos = hitOjbects[i].transform.position;
+                float nextDistance = Vector3.Distance(nextPos, ARAVRInput.RHandPosition);
+                //다음 물체와의 거리가 더 가깝다면
+                if(nextDistance < closestDistance)
+                {
+                    //가장 가까운 물체 인덱스 교체
+                    closest = i;
+                }
+            }
             //3. 폭탄을 잡는다
         }
     }
