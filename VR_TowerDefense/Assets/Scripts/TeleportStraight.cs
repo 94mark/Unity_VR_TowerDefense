@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class TeleportStraight : MonoBehaviour
 {
     public Transform teleportCircleUI; //텔레포트를 표시할 UI
     LineRenderer lr; //선을 그을 라인 렌더러
     Vector3 originScale = Vector3.one * 0.02f;
+    public bool isWarp = false; //워프 사용 여부
+    public float warpTime = 0.1f; //워프에 걸리는 시간
+    public PostProcessVolume post; //사용하고 있는 포스트 프로세싱 볼륨 컴포넌트
 
     void Start()
     {
