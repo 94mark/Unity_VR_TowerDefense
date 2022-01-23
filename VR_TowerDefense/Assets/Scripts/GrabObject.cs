@@ -9,7 +9,9 @@ public class GrabObject : MonoBehaviour
     GameObject grabbedObject; //잡고 있는 물체
     public LayerMask grabbedLayer; //잡을 물체의 종류
     public float grabRange = 0.2f; //잡을 수 있는 거리
-    
+    Vector3 prevPos; //이전 위치
+    float throwPower = 10; //던질 힘
+
     void Start()
     {
         
@@ -69,11 +71,17 @@ public class GrabObject : MonoBehaviour
                 grabbedObject.transform.parent = ARAVRInput.RHand;
                 //물리 기능 정지
                 grabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+                //초기 위치값 지정
+                prevPos = ARAVRInput.RHandPosition;
             }
         }
     }
     private void TryUngrab()
     {
+        //던질 방향
+        Vector3 throwDirection = (ARAVRInput.RHandPosition - prevPos);
+        //위치 기억
+        prevPos = ARAVRInput.RHandPosition;
         //버튼을 놓았다면
         if(ARAVRInput.GetUp(ARAVRInput.Button.HandTrigger, ARAVRInput.Controller.RTouch))
         {
@@ -83,6 +91,8 @@ public class GrabObject : MonoBehaviour
             grabbedObject.GetComponent<Rigidbody>().isKinematic = false;
             //손에서 폭탄 떼어내기
             grabbedObject.transform.parent = null;
+            //던지기
+            grabbedObject.GetComponent<Rigidbody>().velocity = throwDirection * throwPower;
             //잡은 물체가 없도록 설정
             grabbedObject = null;
         }
