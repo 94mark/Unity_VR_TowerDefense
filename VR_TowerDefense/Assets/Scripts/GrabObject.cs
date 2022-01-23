@@ -135,4 +135,29 @@ public class GrabObject : MonoBehaviour
             grabbedObject = null;
         }
     }
+    IEnumerator GrabbingAnimation()
+    {
+        //물리 기능 정지
+        grabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+        //초기 위치 값 지정
+        prevPos = ARAVRInput.RHandPosition;
+        //초기 회전 값 지정
+        preRot = ARAVRInput.RHand.rotation;
+        Vector3 startLocation = grabbedObject.transform.position;
+        Vector3 targetLocation = ARAVRInput.RHandPosition + ARAVRInput.RHandPosition * 0.1f;
+        float currentTime = 0;
+        float finishTime = 0.2f;
+        //경과율
+        float elapseRate = currentTime / finishTime;
+        while(elapseRate < 1)
+        {
+            currentTime += Time.deltaTime;
+            elapseRate = currentTime / finishTime;
+            grabbedObject.transform.position = Vector3.Lerp(startLocation, targetLocation, elapseRate);
+            yield return null;
+        }
+        //잡은 물체를 손의 자식으로 등록
+        grabbedObject.transform.position = targetLocation;
+        grabbedObject.transform.parent = ARAVRInput.RHand;
+    }
 }
