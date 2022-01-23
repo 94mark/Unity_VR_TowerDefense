@@ -530,6 +530,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: bomb
       objectReference: {fileID: 0}
+    - target: {fileID: 4697899221370971972, guid: 44cba8ae617d86d41bc6028f90e2be70, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 5366490713873120766, guid: 44cba8ae617d86d41bc6028f90e2be70, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1495,7 +1499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabbedLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4096
   grabRange: 0.2
 --- !u!1001 &1539516843
 PrefabInstance:
