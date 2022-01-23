@@ -24,6 +24,8 @@ public class Gun : MonoBehaviour
         //사용자가 IndexTrigger 버튼을 누르면
         if (ARAVRInput.GetDown(ARAVRInput.Button.IndexTrigger))
         {
+            //컨트롤러의 진동 재생
+            ARAVRInput.PlayVibration(ARAVRInput.Controller.RTouch);
             //총알 오디오 재생
             bulletAudio.Stop();
             bulletAudio.Play();
