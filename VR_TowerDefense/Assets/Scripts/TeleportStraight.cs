@@ -35,10 +35,19 @@ public class TeleportStraight : MonoBehaviour
             lr.enabled = false;
             if(teleportCircleUI.gameObject.activeSelf)
             {
-                GetComponent<CharacterController>().enabled = false;
-                //텔레포트 UI 위치로 순간 이동
-                transform.position = teleportCircleUI.position + Vector3.up;
-                GetComponent<CharacterController>().enabled = true;
+                //워프 기능 사용이 아닐 때 순간 이동 처리
+                if(isWarp == false)
+                {
+                    GetComponent<CharacterController>().enabled = false;
+                    //텔레포트 UI 위치로 순간 이동
+                    transform.position = teleportCircleUI.position + Vector3.up;
+                    GetComponent<CharacterController>().enabled = true;
+                }
+                else
+                {
+                    //워프 기능을 사용할 때는 Warp() 코루틴 호출
+                    StartCoroutine(Warp());
+                }
             }
             //텔레포트 UI 비활성화
             teleportCircleUI.gameObject.SetActive(false);
@@ -73,5 +82,37 @@ public class TeleportStraight : MonoBehaviour
                 teleportCircleUI.gameObject.SetActive(false);
             }
         }
+    }
+    IEnumerator Warp()
+    {
+        //워프 느낌을 표현할 모션블러
+        MotionBlur blur;
+        //워프 시작점 기억
+        Vector3 pos = transform.position;
+        //목적지
+        Vector3 targetPos = teleportCircleUI.position + Vector3.up;
+        //워프 경과 시간
+        float currentTime = 0;
+        //포스트 프로세싱에 사용 중인 프로파일에서 모션 블러 얻어오기
+        post.profile.TryGetSettings<MotionBlur>(out blur);
+        //워프 시작 전 블러 켜기
+        blur.active = true;
+        GetComponent<CharacterController>().enabled = false;
+        //경과 시간이 워프보다 짧은 시간 동안 이동 처리
+        while(currentTime < warpTime)
+        {
+            //경과 시간 흐르게 하기
+            currentTime += Time.deltaTime;
+            //워프의 시작점에서 도착점에 도착하기 위해 워프 시간 동안 이동
+            transform.position = Vector3.Lerp(pos, targetPos, currentTime / warpTime);
+            //코루틴 대기
+            yield return null;
+        }
+        //텔레포트 UI 위치로 순간 이동
+        transform.position = teleportCircleUI.position + Vector3.up;
+        //캐릭터 컨트롤러 다시 켜기
+        GetComponent<CharacterController>().enabled = true;
+        //포스트 효과 끄기
+        blur.active = false;
     }
 }
