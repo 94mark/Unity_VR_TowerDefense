@@ -96,6 +96,21 @@ public class TeleportCurve : MonoBehaviour
         {
             //다음 점의 위치를 충돌한 지점으로 설정
             pos = hitInfo.point;
+
+            int layer = LayerMask.NameToLayer("Terrain");
+            //Terrain 레이어와 충돌했을 경우에만 텔레포트 UI가 표시되도록 한다
+            if(hitInfo.transform.gameObject.layer == layer)
+            {
+                //텔레포트 UI 활성화
+                teleportCircleUI.gameObject.SetActive(true);
+                //텔레포트 UI의 위치 지정
+                teleportCircleUI.position = pos;
+                //텔레포트 UI의 방향 설정
+                teleportCircleUI.forward = hitInfo.normal;
+                float distance = (pos - ARAVRInput.LHandPosition).magnitude;
+                //텔레포트 UI가 보일 크기를 설정
+                teleportCircleUI.localScale = originScale * Mathf.Max(1, distance);
+            }
             return true;
         }
         return false;
