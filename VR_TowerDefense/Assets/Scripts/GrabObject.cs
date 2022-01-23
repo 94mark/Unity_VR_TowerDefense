@@ -24,6 +24,11 @@ public class GrabObject : MonoBehaviour
             //잡기 시도
             TryGrab();
         }
+        else
+        {
+            //물체 놓기
+            TryUngrab();
+        }
     }
     private void TryGrab()
     {
@@ -65,6 +70,21 @@ public class GrabObject : MonoBehaviour
                 //물리 기능 정지
                 grabbedObject.GetComponent<Rigidbody>().isKinematic = true;
             }
+        }
+    }
+    private void TryUngrab()
+    {
+        //버튼을 놓았다면
+        if(ARAVRInput.GetUp(ARAVRInput.Button.HandTrigger, ARAVRInput.Controller.RTouch))
+        {
+            //잡지 않은 상태로 전환
+            isGrabbing = false;
+            //물리 기능 활성화
+            grabbedObject.GetComponent<Rigidbody>().isKinematic = false;
+            //손에서 폭탄 떼어내기
+            grabbedObject.transform.parent = null;
+            //잡은 물체가 없도록 설정
+            grabbedObject = null;
         }
     }
 }
