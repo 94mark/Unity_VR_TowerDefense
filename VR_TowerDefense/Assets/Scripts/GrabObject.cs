@@ -11,6 +11,8 @@ public class GrabObject : MonoBehaviour
     public float grabRange = 0.2f; //잡을 수 있는 거리
     Vector3 prevPos; //이전 위치
     float throwPower = 10; //던질 힘
+    Quaternion preRot; //이전 회전
+    public float rotPower = 5; //회전력
 
     void Start()
     {
@@ -73,6 +75,8 @@ public class GrabObject : MonoBehaviour
                 grabbedObject.GetComponent<Rigidbody>().isKinematic = true;
                 //초기 위치값 지정
                 prevPos = ARAVRInput.RHandPosition;
+                //초기 회전 값 지정
+                preRot = ARAVRInput.RHand.rotation;
             }
         }
     }
@@ -82,6 +86,15 @@ public class GrabObject : MonoBehaviour
         Vector3 throwDirection = (ARAVRInput.RHandPosition - prevPos);
         //위치 기억
         prevPos = ARAVRInput.RHandPosition;
+        //쿼터니언 공식
+        //angle1 = Q1, angle2 = Q2
+        //angle1 + angle2 = Q1 * Q2
+        //-angle2 = Quaternion.Inverse(Q2)
+        //angle2 - angle1 = Quternion.FromToRotation(Q1.Q2) = Q2 * Quaternion.Inverse(Q1)
+        //회전 방향 = current - previous의 차로 구함. -previous는 Inverse로 구함
+        Quaternion deltaRotation = ARAVRInput.RHand.rotation * Quaternion.Inverse(preRot);
+        //이전 회전 저장
+        preRot = ARAVRInput.RHand.rotation;
         //버튼을 놓았다면
         if(ARAVRInput.GetUp(ARAVRInput.Button.HandTrigger, ARAVRInput.Controller.RTouch))
         {
