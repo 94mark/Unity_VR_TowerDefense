@@ -91,5 +91,13 @@ public class TeleportCurve : MonoBehaviour
         Vector3 rayDir = pos - lastPos;
         Ray ray = new Ray(lastPos, rayDir);
         RaycastHit hitInfo;
+        //Raycast할 때 레이의 크기를 앞 점과 다음 점 사이의 거리로 한정
+        if(Physics.Raycast(ray, out hitInfo, rayDir.magnitude))
+        {
+            //다음 점의 위치를 충돌한 지점으로 설정
+            pos = hitInfo.point;
+            return true;
+        }
+        return false;
     }
 }
