@@ -13,6 +13,8 @@ public class GrabObject : MonoBehaviour
     float throwPower = 10; //던질 힘
     Quaternion preRot; //이전 회전
     public float rotPower = 5; //회전력
+    public bool isRemoteGrab = true; //원거리에서 물체를 잡는 기능 활성화 여부
+    public float remoteGrabDistance = 20; //원거리에서 물체를 잡을 수 있는 거리
 
     void Start()
     {
@@ -40,6 +42,24 @@ public class GrabObject : MonoBehaviour
         //1.grab 버튼을 눌렀다면
         if(ARAVRInput.GetDown(ARAVRInput.Button.HandTrigger, ARAVRInput.Controller.RTouch))
         {
+            //원거리 물체 잡기를 사용한다면
+            if(isRemoteGrab)
+            {
+                //손 방향으로 Ray 제작
+                Ray ray = new Ray(ARAVRInput.RHandPosition, ARAVRInput.RHandDirection);
+                RaycastHit hitInfo;
+                //SphereCast를 이용해 물체 충돌을 체크
+                if(Physics.SphereCast(ray, 0.5f, out hitInfo, remoteGrabDistance, grabbedLayer))
+                {
+                    //잡은 상태로 전환
+                    isGrabbing = true;
+                    //잡은 물체에 대한 기억
+                    grabbedObject = hitInfo.transform.gameObject;
+                    //물체가 끌려오는 기능 실행
+                    StartCoroutine(GrabbingAnimation());
+                }
+                return;
+            }
             //2. 일정 영역 안에 폭탄이 있을 때
             //영역 안에 있는 모든 폭탄 검출
             Collider[] hitOjbects = Physics.OverlapSphere(ARAVRInput.RHandPosition, grabRange, grabbedLayer);
@@ -106,6 +126,11 @@ public class GrabObject : MonoBehaviour
             grabbedObject.transform.parent = null;
             //던지기
             grabbedObject.GetComponent<Rigidbody>().velocity = throwDirection * throwPower;
+            //각속도 = (1/dt) * dtheta(특정 축 기준 변위 각도)
+            float angle;
+            Vector3 axis;
+            deltaRotation.ToAngleAxis(out angle, out axis);
+            Vector3 angularVelocity = (1.0f / Time.deltaTime) * angle * axis;
             //잡은 물체가 없도록 설정
             grabbedObject = null;
         }
