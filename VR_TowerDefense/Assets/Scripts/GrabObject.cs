@@ -62,6 +62,8 @@ public class GrabObject : MonoBehaviour
                 grabbedObject = hitOjbects[closest].gameObject;
                 //잡은 물체를 손의 자식으로 등록
                 grabbedObject.transform.parent = ARAVRInput.RHand;
+                //물리 기능 정지
+                grabbedObject.GetComponent<Rigidbody>().isKinematic = true;
             }
         }
     }
