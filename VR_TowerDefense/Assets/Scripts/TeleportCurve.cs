@@ -84,4 +84,12 @@ public class TeleportCurve : MonoBehaviour
         //라인 렌더러에 구해진 점의 정보를 지정
         lr.SetPositions(lines.ToArray());
     }
+    //앞 점의 위치와 다음 점의 위치를 받아 레이어 충돌을 체크
+    private bool CheckHitRay(Vector3 lastPos, ref Vector3 pos)
+    {
+        //앞 점 lastPos에서 다음 점 pos로 향하는 벡터 계산
+        Vector3 rayDir = pos - lastPos;
+        Ray ray = new Ray(lastPos, rayDir);
+        RaycastHit hitInfo;
+    }
 }
