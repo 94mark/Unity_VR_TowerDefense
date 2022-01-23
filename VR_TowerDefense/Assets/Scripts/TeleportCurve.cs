@@ -76,6 +76,18 @@ public class TeleportCurve : MonoBehaviour
             dir.y += gravity * simulateTime;
             //등속 운동으로 다음 위치 계산 p = p0 + vt
             pos += dir * simulateTime;
+            //Ray 충돌 체크가 일어났으면
+            if(CheckHitRay(lastPos, ref pos))
+            {
+                //충돌 지점을 등록하고 종료
+                lines.Add(pos);
+                break;
+            }
+            else
+            {
+                //텔레포트UI 비활성화
+                teleportCircleUI.gameObject.SetActive(false);
+            }
             //구한 위치를 등록
             lines.Add(pos);
         }
