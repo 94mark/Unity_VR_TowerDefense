@@ -53,6 +53,16 @@ public class GrabObject : MonoBehaviour
                 }
             }
             //3. 폭탄을 잡는다
+            //검출된 물체가 있을 경우
+            if(hitOjbects.Length > 0)
+            {
+                //잡은 상태로 전환
+                isGrabbing = true;
+                //잡은 물체에 대한 기억
+                grabbedObject = hitOjbects[closest].gameObject;
+                //잡은 물체를 손의 자식으로 등록
+                grabbedObject.transform.parent = ARAVRInput.RHand;
+            }
         }
     }
 }
