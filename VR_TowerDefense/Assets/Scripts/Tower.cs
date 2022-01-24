@@ -25,6 +25,10 @@ public class Tower : MonoBehaviour
         set
         {
             _hp = value;
+            //기존에 진행 중인 코루틴 해제
+            StopAllCoroutines();
+            //깜빡거림을 처리할 코루틴 호출
+            StartCoroutine(DamageEvent());
             //hp가 0 이하면 제거
             if (_hp <= 0)
             {
