@@ -88,7 +88,8 @@ public class DroneAI : MonoBehaviour
         //2. 경과 시간이 공격 지연 시간을 초과하면
         if(currentTime > attackDelayTime)
         {
-            //3. 공격
+            //3. 공격 -> Tower의 HP를 호출해 데미지 처리를 한다
+            Tower.Instance.HP--;
             //4. 경과 시간 초기화
             currentTime = 0;
         }
