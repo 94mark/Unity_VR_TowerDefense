@@ -22,6 +22,7 @@ public class DroneAI : MonoBehaviour
     Transform tower; //타워 위치
     NavMeshAgent agent; //길 찾기를 수행할 내비게이션 메시 에이전트
     public float attackRange = 3; //공격 범위
+    public float attackDelayTime = 2; //공격 지연 시간
 
     void Start()
     {
@@ -82,7 +83,15 @@ public class DroneAI : MonoBehaviour
     }
     private void Attack()
     {
-
+        //1. 시간이 흐른다
+        currentTime += Time.deltaTime;
+        //2. 경과 시간이 공격 지연 시간을 초과하면
+        if(currentTime > attackDelayTime)
+        {
+            //3. 공격
+            //4. 경과 시간 초기화
+            currentTime = 0;
+        }
     }
     private void Damage()
     {
