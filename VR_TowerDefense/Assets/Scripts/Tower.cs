@@ -12,6 +12,9 @@ public class Tower : MonoBehaviour
     public int initialHP = 10; //타워의 최초 HP
     int _hp = 0; //내부 hp 변수
 
+    public static Tower Instance; //Tower의 싱글턴 객체
+    public float damageTime = 0.1f; //깜빡거리는 시간
+
     //_hp의 get/set 프로퍼티
     public int HP
     {
@@ -30,7 +33,17 @@ public class Tower : MonoBehaviour
         }
     }
 
-    public static Tower Instance; //Tower의 싱글턴 객체
+    //데미지 처리를 위한 코루틴 함수
+    IEnumerator DamageEvent()
+    {
+        //damageImage 컴포넌트를 활성화
+        damageImage.enabled = true;
+        //damageTime만큼 기다린다
+        yield return new WaitForSeconds(damageTime);
+        //다시 원래대로 비활성화
+        damageImage.enabled = false;
+    }
+
     void Awake()
     {
         //싱글턴 객체 값 할당
