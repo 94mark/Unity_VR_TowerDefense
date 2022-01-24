@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DroneAI : MonoBehaviour
 {
@@ -17,10 +18,19 @@ public class DroneAI : MonoBehaviour
     DroneState state = DroneState.Idle; //초기 시작 상태는 Idle로 설정
     public float idleDelayTime = 2; //대기 상태의 지속 시간
     float currentTime; //경과 시간
+    public float moveSpeed = 1; //이동 속도
+    Transform tower; //타워 위치
+    NavMeshAgent agent; //길 찾기를 수행할 내비게이션 메시 에이전트
 
     void Start()
     {
-
+        //타워 찾기
+        tower = GameObject.Find("Tower").transform;
+        //NavMeshAgent 컴포넌트 가져오기
+        agent = GetComponent<NavMeshAgent>();
+        agent.enabled = false;
+        //agent의 속도 설정
+        agent.speed = moveSpeed;
     }
 
     void Update()
@@ -53,11 +63,14 @@ public class DroneAI : MonoBehaviour
         {
             //3. 상태를 이동으로 전환
             state = DroneState.Move;
+            //agent 활성화
+            agent.enabled = true;
         }
     }
-    private void Move()
+    private void Move() //타워를 향해 이동
     {
-
+        //내비게이션할 목적지 설정
+        agent.SetDestination(tower.position);
     }
     private void Attack()
     {
