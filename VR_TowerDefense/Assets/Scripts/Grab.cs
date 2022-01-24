@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrabObject : MonoBehaviour
+public class Grab : MonoBehaviour
 {
     //필요 속성 : 물체를 잡고 있는지 여부, 잡고 있는 물체, 잡을 물체의 종류, 잡을 수 있는 거리
     bool isGrabbing = false; //물체를 잡고 있는지의 여부
