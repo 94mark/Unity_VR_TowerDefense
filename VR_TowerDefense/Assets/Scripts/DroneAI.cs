@@ -63,7 +63,7 @@ public class DroneAI : MonoBehaviour
                 //Damage();
                 break;
             case DroneState.Die:
-                Die();
+                //Die();
                 break;
         }
     }
@@ -125,10 +125,6 @@ public class DroneAI : MonoBehaviour
         }
     }
     
-    private void Die()
-    {
-
-    }
     //피격 상태 알림 이벤트 함수
     public void OnDamageProcess()
     {
