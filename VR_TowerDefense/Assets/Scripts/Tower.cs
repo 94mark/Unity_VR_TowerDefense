@@ -11,6 +11,7 @@ public class Tower : MonoBehaviour
 
     public int initialHP = 10; //타워의 최초 HP
     int _hp = 0; //내부 hp 변수
+
     //_hp의 get/set 프로퍼티
     public int HP
     {
@@ -22,10 +23,20 @@ public class Tower : MonoBehaviour
         {
             _hp = value;
             //hp가 0 이하면 제거
-            if(_hp <= 0)
+            if (_hp <= 0)
             {
                 Destroy(gameObject);
             }
+        }
+    }
+
+    public static Tower Instance; //Tower의 싱글턴 객체
+    void Awake()
+    {
+        //싱글턴 객체 값 할당
+        if(Instance == null)
+        {
+            Instance = this;
         }
     }
     void Start()
