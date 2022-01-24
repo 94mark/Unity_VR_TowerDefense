@@ -26,6 +26,10 @@ public class DroneAI : MonoBehaviour
     
     [SerializeField] //private 속성이지만 에디터에 노출됨
     int hp = 3; //체력
+    //폭발 효과
+    Transform explosion;
+    ParticleSystem expEffect;
+    AudioSource expAudio;
 
     void Start()
     {
@@ -36,6 +40,10 @@ public class DroneAI : MonoBehaviour
         agent.enabled = false;
         //agent의 속도 설정
         agent.speed = moveSpeed;
+
+        explosion = GameObject.Find("Explosion").transform;
+        expEffect = explosion.GetComponent<ParticleSystem>();
+        expAudio = explosion.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -135,6 +143,18 @@ public class DroneAI : MonoBehaviour
             //코루틴 호출
             StopAllCoroutines();
             StartCoroutine(Damage());
+        }
+        //죽었다면 폭발 효과를 발생시키고 드론 제거
+        else
+        {
+            //폭발 효과의 위치 지정
+            explosion.position = transform.position;
+            //이펙트 재생
+            expEffect.Play();
+            //이펙트 사운드 재생
+            expAudio.Play();
+            //드론 없애기
+            Destroy(gameObject);
         }
     }
 }
