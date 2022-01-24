@@ -48,6 +48,16 @@ public class Gun : MonoBehaviour
                 bulletImpact.position = hitInfo.point;
                 //부딪힌 지점의 방향으로 총알 이펙트의 방향을 설정
                 bulletImpact.forward = hitInfo.normal;
+                
+                //ray와 부딪힌 객체가 drone이라면 피격 처리
+                if(hitInfo.transform.name.Contains("Drone"))
+                {
+                    DroneAI drone = hitInfo.transform.GetComponent<DroneAI>();
+                    if(drone)
+                    {
+                        drone.OnDamageProcess();
+                    }
+                }
             }
         }
     }
