@@ -18,14 +18,14 @@ public class Grab : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void Update()
     {
         //물체 잡기
         //1. 물체를 잡지 않고 있을 경우
-        if(isGrabbing == false)
+        if (isGrabbing == false)
         {
             //잡기 시도
             TryGrab();
@@ -40,16 +40,16 @@ public class Grab : MonoBehaviour
     {
         //grab 버튼을 누르면 일정 영역 안에 있는 폭탄을 잡는다
         //1.grab 버튼을 눌렀다면
-        if(ARAVRInput.GetDown(ARAVRInput.Button.HandTrigger, ARAVRInput.Controller.RTouch))
+        if (ARAVRInput.GetDown(ARAVRInput.Button.HandTrigger, ARAVRInput.Controller.RTouch))
         {
             //원거리 물체 잡기를 사용한다면
-            if(isRemoteGrab)
+            if (isRemoteGrab)
             {
                 //손 방향으로 Ray 제작
                 Ray ray = new Ray(ARAVRInput.RHandPosition, ARAVRInput.RHandDirection);
                 RaycastHit hitInfo;
                 //SphereCast를 이용해 물체 충돌을 체크
-                if(Physics.SphereCast(ray, 0.5f, out hitInfo, remoteGrabDistance, grabbedLayer))
+                if (Physics.SphereCast(ray, 0.5f, out hitInfo, remoteGrabDistance, grabbedLayer))
                 {
                     //잡은 상태로 전환
                     isGrabbing = true;
@@ -66,7 +66,7 @@ public class Grab : MonoBehaviour
             //가장 가까운 폭탄 인덱스
             int closest = 0;
             //손과 가장 가까운 물체 선택
-            for(int i = 1; i < hitOjbects.Length; i++)
+            for (int i = 1; i < hitOjbects.Length; i++)
             {
                 //손과 가장 가까운 물체와의 거리
                 Vector3 closestPos = hitOjbects[closest].transform.position;
@@ -75,7 +75,7 @@ public class Grab : MonoBehaviour
                 Vector3 nextPos = hitOjbects[i].transform.position;
                 float nextDistance = Vector3.Distance(nextPos, ARAVRInput.RHandPosition);
                 //다음 물체와의 거리가 더 가깝다면
-                if(nextDistance < closestDistance)
+                if (nextDistance < closestDistance)
                 {
                     //가장 가까운 물체 인덱스 교체
                     closest = i;
@@ -83,7 +83,7 @@ public class Grab : MonoBehaviour
             }
             //3. 폭탄을 잡는다
             //검출된 물체가 있을 경우
-            if(hitOjbects.Length > 0)
+            if (hitOjbects.Length > 0)
             {
                 //잡은 상태로 전환
                 isGrabbing = true;
@@ -116,7 +116,7 @@ public class Grab : MonoBehaviour
         //이전 회전 저장
         preRot = ARAVRInput.RHand.rotation;
         //버튼을 놓았다면
-        if(ARAVRInput.GetUp(ARAVRInput.Button.HandTrigger, ARAVRInput.Controller.RTouch))
+        if (ARAVRInput.GetUp(ARAVRInput.Button.HandTrigger, ARAVRInput.Controller.RTouch))
         {
             //잡지 않은 상태로 전환
             isGrabbing = false;
@@ -149,7 +149,7 @@ public class Grab : MonoBehaviour
         float finishTime = 0.2f;
         //경과율
         float elapseRate = currentTime / finishTime;
-        while(elapseRate < 1)
+        while (elapseRate < 1)
         {
             currentTime += Time.deltaTime;
             elapseRate = currentTime / finishTime;
