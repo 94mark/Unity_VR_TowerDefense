@@ -23,6 +23,9 @@ public class DroneAI : MonoBehaviour
     NavMeshAgent agent; //길 찾기를 수행할 내비게이션 메시 에이전트
     public float attackRange = 3; //공격 범위
     public float attackDelayTime = 2; //공격 지연 시간
+    
+    [SerializeField] //private 속성이지만 에디터에 노출됨
+    int hp = 3; //체력
 
     void Start()
     {
@@ -49,12 +52,31 @@ public class DroneAI : MonoBehaviour
                 Attack();
                 break;
             case DroneState.Damage:
-                Damage();
+                //Damage();
                 break;
             case DroneState.Die:
                 Die();
                 break;
         }
+    }
+    IEnumerator Damage()
+    {
+        //1. 길 찾기 중지
+        agent.enabled = false;
+        //2. 자식 객체의 MeshRenderer에서 재질 얻어오기
+        Material mat = GetComponentInChildren<MeshRenderer>().material;
+        //3. 원래 색을 저장
+        Color originalColor = mat.color;
+        //4. 재질의 색 변경
+        mat.color = Color.red;
+        //5. 0.1초 기다리기
+        yield return new WaitForSeconds(0.1f);
+        //6. 재질의 색을 원래대로
+        mat.color = originalColor;
+        //7. 상태를 Idle로 전환
+        state = DroneState.Idle;
+        //8. 경과 시간 초기화
+        currentTime = 0;
     }
     private void Idle() //일정 시간 동안 기다렸다가 상태를 공격으로 전환
     {
@@ -94,12 +116,25 @@ public class DroneAI : MonoBehaviour
             currentTime = 0;
         }
     }
-    private void Damage()
-    {
-
-    }
+    
     private void Die()
     {
 
+    }
+    //피격 상태 알림 이벤트 함수
+    public void OnDamageProcess()
+    {
+        //체력을 감소시키고 죽지 않았다면 상태를 데미지로 전환하고 싶다
+        //1. 체력 감소
+        hp--;
+        //2. 만약 죽지 않았다면
+        if(hp > 0)
+        {
+            //3. 상태를 데미지로 전환
+            state = DroneState.Damage;
+            //코루틴 호출
+            StopAllCoroutines();
+            StartCoroutine(Damage());
+        }
     }
 }
