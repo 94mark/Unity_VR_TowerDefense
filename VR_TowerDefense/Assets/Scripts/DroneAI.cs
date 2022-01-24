@@ -21,6 +21,7 @@ public class DroneAI : MonoBehaviour
     public float moveSpeed = 1; //이동 속도
     Transform tower; //타워 위치
     NavMeshAgent agent; //길 찾기를 수행할 내비게이션 메시 에이전트
+    public float attackRange = 3; //공격 범위
 
     void Start()
     {
@@ -71,6 +72,13 @@ public class DroneAI : MonoBehaviour
     {
         //내비게이션할 목적지 설정
         agent.SetDestination(tower.position);
+        //공격 범위 안에 들어오면 공격 상태로 전환
+        if(Vector3.Distance(transform.position, tower.position) < attackRange)
+        {
+            state = DroneState.Attack;
+            //agent의 동작 정지
+            agent.enabled = false;
+        }
     }
     private void Attack()
     {
