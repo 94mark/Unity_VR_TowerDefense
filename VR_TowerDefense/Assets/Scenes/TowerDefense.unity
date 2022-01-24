@@ -109,7 +109,7 @@ NavMeshSettings:
     agentRadius: 0.5
     agentHeight: 2
     agentSlope: 45
-    agentClimb: 0.4
+    agentClimb: 0.2
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 8937f7e4d1f52ee4eae71b86da8c633b, type: 2}
 --- !u!1001 &289041660
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -259,6 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idleDelayTime: 2
+  moveSpeed: 1
 --- !u!1001 &356210602
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -335,7 +336,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &452916702
 Transform:
@@ -788,6 +789,10 @@ PrefabInstance:
     - target: {fileID: 3229300306494592034, guid: ab4aa55d55708314b9333d85460c3db8, type: 3}
       propertyPath: m_Name
       value: WallSet_1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3229300306494592034, guid: ab4aa55d55708314b9333d85460c3db8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab4aa55d55708314b9333d85460c3db8, type: 3}
@@ -1270,6 +1275,10 @@ PrefabInstance:
     - target: {fileID: 3229300306494592034, guid: ab4aa55d55708314b9333d85460c3db8, type: 3}
       propertyPath: m_Name
       value: WallSet_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3229300306494592034, guid: ab4aa55d55708314b9333d85460c3db8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab4aa55d55708314b9333d85460c3db8, type: 3}
