@@ -60,11 +60,12 @@ public class Grab : MonoBehaviour
                 }
                 return;
             }
+            int closest = 0;
             //2. 일정 영역 안에 폭탄이 있을 때
             //영역 안에 있는 모든 폭탄 검출
             Collider[] hitOjbects = Physics.OverlapSphere(ARAVRInput.RHandPosition, grabRange, grabbedLayer);
             //가장 가까운 폭탄 인덱스
-            int closest = 0;
+            
             //손과 가장 가까운 물체 선택
             for (int i = 1; i < hitOjbects.Length; i++)
             {
@@ -131,6 +132,7 @@ public class Grab : MonoBehaviour
             Vector3 axis;
             deltaRotation.ToAngleAxis(out angle, out axis);
             Vector3 angularVelocity = (1.0f / Time.deltaTime) * angle * axis;
+            grabbedObject.GetComponent<Rigidbody>().angularVelocity = angularVelocity;
             //잡은 물체가 없도록 설정
             grabbedObject = null;
         }
