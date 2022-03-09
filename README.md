@@ -13,8 +13,8 @@
 - 프로토타입 버전: 기본 기능 구현 및 PC 버전
 - 알파 타입 버전 : VR 컨트롤러 입력 대응 
 ## 3. 핵심 구현 내용 
-### 3.1 이동 조작
-- 기본적인 이동 및 점프
+### 3.1 플레이어 조작
+- 이동 및 점프
 	- 전후좌우 이동은 CharacterController의 Move 함수 사용
 	- 등가속도 운동 공식이 적용된 yVelocity 값에 중력을 더하고 수직 속도에 점프 크기를 넣어 Jump 기능 구현
 	- TransformDirection() 함수를 사용하여 카메라가 바라보는 방향으로 사용자의 입력 방향을 바꿈(사용자가 바라보는 방향으로 이동 구현)
@@ -23,6 +23,9 @@
 	- 텔레포트 UI의 크기가 거리에 따라 보정되도록 original scale 설정, normal 벡터 방향을 forward로 해 UI가 하늘을 바라보도록 그림
 	- Get/GetDown/GetUp 메서드를 사용하여 컨트롤러의 버튼 입력 시의 처리와 순서 재정리
 	- PostProcessing에서 사용하는 프로파일에서 Motion Blur 효과를 얻어오고 Warp() 함수 구현에 적용, 시작점에서 도착점까지의 이동을 선형 보간(Lerp)으로 처리
+- Grab하기
+	- Physics.OverlapSphere() 함수를 사용하여 컨트롤러의 위치를 중심으로 grabRange 안에 들어온 grabbedLayer 물체 검출
+	- grabbedObject를 계속 잡고 있을 수 있도록 컨트롤러를 parent로 등록, is kinematic 옵션을 활성화하여 grab 되어있는 동안 물리 기능 비활성화
 ### 3.2 무기
 - 총 
 	- 조준점 Crosshair 활성화, IndexTrigger 버튼 입력 시 Ray를 발사
