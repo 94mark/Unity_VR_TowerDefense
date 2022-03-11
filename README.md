@@ -1,4 +1,5 @@
 # 타워 디펜스 VR게임 제작
+![image](https://user-images.githubusercontent.com/90877724/157863769-6c90cab6-9c1f-4ab0-b2b9-9098f1472153.png)
 ## 1. 프로젝트 개요
 ### 1.1 개발 인원/기간 및 포지션
 - 1인, 총 5일 소요
